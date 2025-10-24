@@ -9,37 +9,40 @@ def division(a, b):
         return "Erreur : division par zéro"
     return a / b
 
-def calculer(operation):
+def calculer(op):
     try:
         a = float(entree1.get())
         b = float(entree2.get())
-        if operation == "addition":
-            res = addition(a, b)
-        elif operation == "soustraction":
-            res = soustraction(a, b)
-        elif operation == "multiplication":
-            res = multiplication(a, b)
-        elif operation == "division":
-            res = division(a, b)
+        if op == "+": res = addition(a, b)
+        elif op == "-": res = soustraction(a, b)
+        elif op == "*": res = multiplication(a, b)
+        elif op == "/": res = division(a, b)
         label_resultat.config(text=f"Résultat : {res}")
     except ValueError:
         messagebox.showerror("Erreur", "Veuillez entrer des nombres valides")
 
 fenetre = tk.Tk()
 fenetre.title("Calculatrice graphique")
-fenetre.geometry("300x300")
+fenetre.geometry("320x240")
+fenetre.resizable(False, False)
 
-entree1 = tk.Entry(fenetre)
-entree2 = tk.Entry(fenetre)
-entree1.pack(pady=5)
-entree2.pack(pady=5)
+frame = tk.Frame(fenetre, padx=10, pady=10)
+frame.pack()
 
-tk.Button(fenetre, text="+", command=lambda: calculer("addition")).pack(pady=2)
-tk.Button(fenetre, text="-", command=lambda: calculer("soustraction")).pack(pady=2)
-tk.Button(fenetre, text="×", command=lambda: calculer("multiplication")).pack(pady=2)
-tk.Button(fenetre, text="÷", command=lambda: calculer("division")).pack(pady=2)
+tk.Label(frame, text="Nombre 1").grid(row=0, column=0)
+entree1 = tk.Entry(frame)
+entree1.grid(row=0, column=1)
+
+tk.Label(frame, text="Nombre 2").grid(row=1, column=0)
+entree2 = tk.Entry(frame)
+entree2.grid(row=1, column=1)
+
+tk.Button(frame, text="+", width=5, command=lambda: calculer("+")).grid(row=2, column=0, pady=5)
+tk.Button(frame, text="-", width=5, command=lambda: calculer("-")).grid(row=2, column=1, pady=5)
+tk.Button(frame, text="*", width=5, command=lambda: calculer("*")).grid(row=3, column=0, pady=5)
+tk.Button(frame, text="/", width=5, command=lambda: calculer("/")).grid(row=3, column=1, pady=5)
 
 label_resultat = tk.Label(fenetre, text="Résultat : ")
-label_resultat.pack(pady=10)
+label_resultat.pack(pady=8)
 
 fenetre.mainloop()
